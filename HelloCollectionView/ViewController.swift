@@ -28,14 +28,34 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         myCollectionView.dataSource = self
         myCollectionView.delegate = self
         
+//        let screenSize = UIScreen.main.bounds.size
+//        let layout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+//        layout.minimumLineSpacing = 10
+//        let imageSize = screenSize.width / 3 - 12
+//        layout.itemSize = CGSize(width: imageSize, height: imageSize)
+//        myCollectionView.setCollectionViewLayout(layout, animated: false)
+        sizefunc(false)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.rotate),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+    
+    func sizefunc(_ animated:Bool) {
         let screenSize = UIScreen.main.bounds.size
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         layout.minimumLineSpacing = 10
         let imageSize = screenSize.width / 3 - 12
         layout.itemSize = CGSize(width: imageSize, height: imageSize)
-        
-        myCollectionView.setCollectionViewLayout(layout, animated: false)
+        myCollectionView.setCollectionViewLayout(layout, animated: animated)
+    }
+    
+    @objc func rotate() {
+        print("rotate")
+        sizefunc(true)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
