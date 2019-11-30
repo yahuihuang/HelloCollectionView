@@ -28,17 +28,26 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         myCollectionView.dataSource = self
         myCollectionView.delegate = self
         
+        let screenSize = UIScreen.main.bounds.size
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        layout.minimumLineSpacing = 10
+        let imageSize = screenSize.width / 3 - 12
+        layout.itemSize = CGSize(width: imageSize, height: imageSize)
+        
+        myCollectionView.setCollectionViewLayout(layout, animated: false)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //        let cell = UICollectionViewCell()
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ccCell", for: indexPath)
-        cell.backgroundColor = UIColor.yellow
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ccCell", for: indexPath) as! MyCollectionViewCell
+        //cell.backgroundColor = UIColor.yellow
+        cell.myImage.image = images[indexPath.row]
         return cell
     }
 }
